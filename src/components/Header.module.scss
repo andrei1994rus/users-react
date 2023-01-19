@@ -1,0 +1,45 @@
+@mixin smDesktop
+{
+    @media only screen and (min-width: 1024px)
+    {
+        @content;
+    }
+}
+
+@mixin desktop
+{
+    @media only screen and (min-width: 1280px)
+    {
+        @content;
+    }
+}
+
+@mixin flex-center
+{
+    display: flex;
+    justify-content: center;
+}
+
+.div
+{
+    &_header
+    {
+        background: black;
+        color: white;
+        font-size: 5vw;
+        font-weight: bold;
+        padding-left: 1vw;
+
+        @include smDesktop
+        {
+            font-size: 6vw;
+            padding-left: 3vw;
+        }
+
+        @include desktop
+        {
+            font-size: 6.5vw;
+            padding-left: 2.5vw;
+        }
+    }
+}
