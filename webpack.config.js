@@ -66,6 +66,7 @@ module.exports=
 		new CleanWebpackPlugin(),
 		new HtmlWebpackPlugin(
 		{
+            title:'Users on React+Webpack',
 			template:'./src/index.html',
 		}),
 	],
