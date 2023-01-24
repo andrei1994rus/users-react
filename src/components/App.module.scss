@@ -43,6 +43,7 @@
         text-align: center;
 
         font-size: 5vw;
+        padding-right: 1vw;
         margin-top: 2vh;
 
         @include smDesktop
@@ -93,7 +94,6 @@
     &_user
     {
         margin-bottom: 1.5vh;
-        width: 95vw;
         height: 30vh;
         border: 1px solid black;
 
@@ -105,19 +105,18 @@
 
     &_user__avatar img
     {
-        width: 20vw;
+        width: 23vw;
         padding-right: .2vw;
         height: 100%;
 
         @include smDesktop
         {
-            width: 25vw;
             padding-right: .5vw;
         }
 
         @include desktop
         {
-            width: 30vw;
+            width: 26vw;
             padding-right: 1vw;
         }
     }
@@ -125,13 +124,18 @@
     &_user__login
     {
         width: 60vw;
-        font-size: 5.5vw;
+        font-size: 4.5vw;
         align-self: center;
         text-align: center;
 
         @include smDesktop
         {
-            font-size: 6vw;
+            font-size: 4.8vw;
+        }
+
+        @include desktop
+        {
+            font-size: 5.3vh;
         }
     }
 }
