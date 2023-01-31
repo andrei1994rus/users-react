@@ -5,18 +5,19 @@
 - Result has login and avatar of every searched user;
 - This app doesn't search if input value isn't changed after 1.5 seconds;
 - This app doesn't search if input is empty;
-- This app is adaptive and crossbrowser (excluding IE);
+- This app is adaptive and crossbrowser (including IE 11);
 - Every avatar has link of Github profile;
 ---
 
 # Used stack technology 
 - Webpack;
+- NodeJs;
 - ReactJS;
 - CSS3, SCSS;
 - HTML;
 - JS;
-- Libraries: node-sass, autoprefixer, cssnano;
-- Webpack plugins: terser-webpack-plugin, mini-css-extract-plugin, html-webpack-plugin, clean-webpack-plugin;
+- Libraries: node-sass, autoprefixer, cssnano, [modernizr](https://modernizr.com/download?setclasses), jQuery, Express;
+- Webpack plugins: terser-webpack-plugin, mini-css-extract-plugin, html-webpack-plugin, clean-webpack-plugin, compression-webpack-plugin;
 - Api: Github api;
 - Method: Mobile First;
 ---
