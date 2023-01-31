@@ -1,3 +1,4 @@
+import './modernizr.min.js';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './all.scss';

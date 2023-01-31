@@ -20,6 +20,11 @@
     justify-content: center;
 }
 
+input::-ms-clear
+{
+    display: none;
+}
+
 .div
 {
     &_input_field
@@ -66,7 +71,7 @@
 
         @include smDesktop
         {
-            font-size: 4vw;
+            font-size: 4.5vmax;  
         }
     }
 
@@ -137,5 +142,17 @@
         {
             font-size: 5.3vh;
         }
+    }
+}
+
+.nocssvmaxunit__div
+{
+    &_empty
+    {
+        @include flex-center;
+
+        margin-top: 2vh;
+
+        /*font-size in App.js*/
     }
 }

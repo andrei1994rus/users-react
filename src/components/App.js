@@ -3,6 +3,7 @@ import {EMPTY, fromEvent} from 'rxjs';
 import {map, debounceTime,distinctUntilChanged,
     switchMap,mergeMap,tap,catchError,filter} from 'rxjs/operators';
 import {ajax} from 'rxjs/ajax';
+import $ from 'jquery';
 
 import Header from './Header';
 import styles from './App.module.scss';
@@ -14,26 +15,113 @@ class App extends Component
     constructor()
     {
         super();
-        this.state={users: []};
+        this.state=
+        {
+            users: [],
+            div_empty__class: styles.div_empty
+        };
+    }
+
+    clearListUsers=value=>
+    {
+        if(value=='' || value==' ')
+        {
+            this.setState({users: []});
+        }
+    }
+
+    jqueryGetUsers=value=>
+    {
+        if(value)
+        {
+            $.ajax(
+            {
+                type:'GET',
+                url:url+value,
+                success:(data)=>
+                {
+                    console.log('ajax:',data.items);
+                    this.setState({users: data.items});
+                    console.log('state:',this.state.users);
+                }
+            });
+        }
+        
+        this.clearListUsers(value);
     }
 
     componentDidMount=()=>
     {
         const search=document.querySelector('input');
-        console.log(search);
+        
+        console.log("Modernizr.xhrresponsetypejson:"+Modernizr.xhrresponsetypejson);
+        console.log(("Modernizr.cssvmaxunit:"+Modernizr.cssvmaxunit));
+        
+        if(!Modernizr.cssvmaxunit)
+        {
+            this.setState({div_empty__class: styles.nocssvmaxunit__div_empty});
+        }
 
-        this.stream=fromEvent(search,'input').
-        pipe(map(e=>e.target.value),
-        debounceTime(1500),
-        distinctUntilChanged(),
-        tap(()=>this.setState(({users: []}))),
-        filter(v=>v.trim()),
-        switchMap(v=>ajax.getJSON(url+v).
-        pipe(catchError(err=>EMPTY))),
-        map(response=>response.items),
-        mergeMap(items=>items));
-        this.subscription=this.stream.subscribe(user=>
-        this.setState(prevState=>({users: [...prevState.users,user]})));
+        if(!Modernizr.xhrresponsetypejson)
+        {
+            console.log(`xhrresponsetypejson isn't supported by browser!Using rxjs+jquery.`);
+
+            try
+            {
+                this.stream=fromEvent(search,'input').
+                    pipe(map(e=>e.target.value),
+                    debounceTime(1500),
+                    distinctUntilChanged());
+                    this.subscription=this.stream.
+                        subscribe(v=>this.jqueryGetUsers(v));
+            }
+
+            catch(e)
+            {
+                console.log(e);
+            }
+        }
+
+        if(Modernizr.xhrresponsetypejson)
+        {
+            console.log('xhrresponsetypejson is supported by browser!Using rxjs+rxjs/ajax.');
+            console.log(search);
+
+            this.stream=fromEvent(search,'input').
+                pipe(map(e=>e.target.value),
+                debounceTime(1500),
+                distinctUntilChanged(),
+                tap(()=>this.setState(({users: []}))),
+                filter(v=>v.trim()),
+                switchMap(v=>ajax.getJSON(url+v).
+                pipe(catchError(err=>EMPTY))),
+                map(response=>response.items),
+                mergeMap(items=>items));
+                this.subscription=this.stream.subscribe(user=>
+                    this.setState(prevState=>({users: [...prevState.users,user]})));
+        }
+    }
+
+    componentDidUpdate=()=>
+    {
+        if(this.state.users.length===0 || !this.state.users)
+        {
+            if(!Modernizr.cssvmaxunit)
+            {
+                const div_empty=document.querySelector(`.${styles.nocssvmaxunit__div_empty}`);
+                console.log('componentDidUpdate:',div_empty);
+                
+                if(window.outerWidth>window.outerHeight)
+                {
+                    div_empty.style.fontSize='4.5vw';
+                }
+
+                else
+                {
+                    div_empty.style.fontSize='4.5vh';
+                }
+            }
+        }
     }
 
     componentWillUnmount=()=>
@@ -75,9 +163,9 @@ class App extends Component
                 </div>
             )}
             
-            {this.state.users.length===0 &&
+            {(this.state.users.length===0 || !this.state.users) &&
             (
-                <div className={styles.div_empty}>Empty list</div>
+                <div className={this.state.div_empty__class}>Empty list</div>
             )}
         </>
     );
