@@ -4,6 +4,7 @@ const path=require('path');
 const MiniCssExtractPlugin=require('mini-css-extract-plugin');
 const {CleanWebpackPlugin}=require('clean-webpack-plugin');
 const TerserWebpackPlugin=require('terser-webpack-plugin');
+const CompressionPlugin=require('compression-webpack-plugin');
 
 const PORT=process.env.PORT || 3000;
 
@@ -11,6 +12,7 @@ const optimization=()=>
 {
     const config=
     {
+        runtimeChunk: true,
         splitChunks:
         {
             cacheGroups:
@@ -18,16 +20,22 @@ const optimization=()=>
                 vendors:
                 {
                     test: /[\\/]node_modules[\\/]/,
-                    name: 'vendor',
                     chunks: 'all',
-                    enforce: true
+                    name(module)
+                    {
+                        const packageName=module.context.
+                                match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
+                        return `npm.${packageName.replace('@','')}`;
+                    },
+                    reuseExistingChunk: true,
                 }
             }
         },
         minimize: true,
         minimizer:
         [
-            new TerserWebpackPlugin({
+            new TerserWebpackPlugin(
+            {
                 test: /\.(js|jsx)$/,
                 parallel: true
             })
@@ -106,6 +114,12 @@ module.exports=
 		new MiniCssExtractPlugin(
 		{
             filename:'styles.[contenthash].css',
+        }),
+        new CompressionPlugin(
+        {
+            test: /\.js(\?.*)?$/i,
+            minRatio: 0.6,
+            deleteOriginalAssets: true,
         }),
 	],
     optimization: optimization(),
