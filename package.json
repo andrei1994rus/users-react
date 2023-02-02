@@ -46,17 +46,13 @@
   "engines": {
     "node": "14.x"
   },
-  "browserslist": {
-    "production": [
+  "browserslist":
+  [
       ">0.2%",
       "not dead",
+      "ie 11",
+      "ios >= 11",
       "not op_mini all",
       "last 3 version"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  }
+  ]
 }
