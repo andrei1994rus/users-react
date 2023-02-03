@@ -21,4 +21,4 @@
 - Api: Github api;
 - Method: Mobile First;
 ---
-[URL](https://users-react.vercel.app/) .
+[URL](https://users-react.adaptable.app/) .
