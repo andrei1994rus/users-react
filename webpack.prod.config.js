@@ -12,7 +12,6 @@ const optimization=()=>
 {
     const config=
     {
-        runtimeChunk: true,
         splitChunks:
         {
             cacheGroups:
@@ -96,12 +95,16 @@ module.exports=
                         }
                     }
                 ],
+            },
+            {
+                test: /\.(eot|ttf|woff|woff2)$/,
+                loader: 'file-loader'
             }
         ]
     },
     resolve:
     {
-        extensions:["*", ".js", ".jsx",".scss"],
+        extensions:["*", ".js", ".jsx",".scss",".eot",".ttf",".woff",".woff2"],
     },
 	plugins:
 	[

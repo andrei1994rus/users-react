@@ -23,11 +23,12 @@
     "compression-webpack-plugin": "^10.0.0",
     "css-loader": "^6.6.0",
     "cssnano": "^5.1.14",
+    "file-loader": "^6.2.0",
     "html-loader": "^3.1.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.5.3",
-    "node-sass": "^4.14.1",
     "postcss-loader": "^7.0.2",
+    "sass": "^1.58.0",
     "sass-loader": "^12.5.0",
     "style-loader": "^3.3.1",
     "terser-webpack-plugin": "^5.3.6",
@@ -46,11 +47,12 @@
   "engines": {
     "node": "14.x"
   },
-  "browserslist":
-  [
-    "supports es6-module",
-    "ie 11", 
-    "ios >= 11", 
-    "not op_mini all"
+  "browserslist": [
+    ">0.1%",
+    "not dead",
+    "ie 11",
+    "ios >= 11",
+    "not op_mini all",
+    "last 3 version"
   ]
 }
