@@ -8,7 +8,7 @@ import $ from 'jquery';
 import Header from './Header';
 import styles from './App.module.scss';
 
-const url='https://api.github.com/search/users?q=';
+const url='https://api.github.com/search/users?';
 
 class App extends Component
 {
@@ -22,14 +22,6 @@ class App extends Component
         };
     }
 
-    clearListUsers=value=>
-    {
-        if(value=='' || value==' ')
-        {
-            this.setState({users: []});
-        }
-    }
-
     jqueryGetUsers=value=>
     {
         if(value)
@@ -37,17 +29,18 @@ class App extends Component
             $.ajax(
             {
                 type:'GET',
-                url:url+value,
+                url:url+$.param({q:value}),
                 success:(data)=>
                 {
-                    console.log('ajax:',data.items);
                     this.setState({users: data.items});
-                    console.log('state:',this.state.users);
                 }
             });
         }
         
-        this.clearListUsers(value);
+        if(value=='' || value==' ')
+        {
+            this.setState({users: []});
+        }
     }
 
     componentDidMount=()=>
@@ -93,7 +86,7 @@ class App extends Component
                 distinctUntilChanged(),
                 tap(()=>this.setState(({users: []}))),
                 filter(v=>v.trim()),
-                switchMap(v=>ajax.getJSON(url+v).
+                switchMap(v=>ajax.getJSON(url+'q='+v).
                 pipe(catchError(err=>EMPTY))),
                 map(response=>response.items),
                 mergeMap(items=>items));
