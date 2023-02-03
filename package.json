@@ -48,11 +48,9 @@
   },
   "browserslist":
   [
-      ">0.2%",
-      "not dead",
-      "ie 11",
-      "ios >= 11",
-      "not op_mini all",
-      "last 3 version"
+    "supports es6-module",
+    "ie 11", 
+    "ios >= 11", 
+    "not op_mini all"
   ]
 }
