@@ -16,7 +16,7 @@
 - CSS3, SCSS;
 - HTML;
 - JS;
-- Libraries: node-sass, autoprefixer, cssnano, [modernizr](https://modernizr.com/download?setclasses), jQuery, Express;
+- Libraries: sass, autoprefixer, cssnano, rxjs, [modernizr](https://modernizr.com/download?setclasses), jQuery, Express, express-static-gzip;
 - Webpack plugins: terser-webpack-plugin, mini-css-extract-plugin, html-webpack-plugin, clean-webpack-plugin, compression-webpack-plugin;
 - Api: Github api;
 - Method: Mobile First;
