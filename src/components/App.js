@@ -24,23 +24,12 @@ class App extends Component
 
     jqueryGetUsers=value=>
     {
-        if(value)
+        $.ajax(
         {
-            $.ajax(
-            {
-                type:'GET',
-                url:url+$.param({q:value}),
-                success:(data)=>
-                {
-                    this.setState({users: data.items});
-                }
-            });
-        }
-        
-        if(value=='' || value==' ')
-        {
-            this.setState({users: []});
-        }
+            type:'GET',
+            url:url+$.param({q:value}),
+            success:(data)=>this.setState({users: data.items})
+        });
     }
 
     componentDidMount=()=>
@@ -62,14 +51,15 @@ class App extends Component
             try
             {
                 this.stream=fromEvent(search,'input').
-                    pipe(map(e=>e.target.value),
-                    debounceTime(1500),
-                    distinctUntilChanged());
-                    this.subscription=this.stream.
-                        subscribe(v=>this.jqueryGetUsers(v));
-            }
-
-            catch(e)
+                pipe(map(e=>e.target.value),
+                debounceTime(1500),
+                distinctUntilChanged(),
+                tap(()=>this.setState(({users: []}))),
+                filter(v=>v.trim()));
+                this.subscription=this.stream.subscribe(v=>this.jqueryGetUsers(v));
+            } 
+            
+            catch (e)
             {
                 console.log(e);
             }
@@ -78,7 +68,6 @@ class App extends Component
         if(Modernizr.xhrresponsetypejson)
         {
             console.log('xhrresponsetypejson is supported by browser!Using rxjs+rxjs/ajax.');
-            console.log(search);
 
             this.stream=fromEvent(search,'input').
                 pipe(map(e=>e.target.value),
@@ -90,8 +79,8 @@ class App extends Component
                 pipe(catchError(err=>EMPTY))),
                 map(response=>response.items),
                 mergeMap(items=>items));
-                this.subscription=this.stream.subscribe(user=>
-                    this.setState(prevState=>({users: [...prevState.users,user]})));
+            this.subscription=this.stream.subscribe(user=>
+                this.setState(prevState=>({users: [...prevState.users,user]})));
         }
     }
 
