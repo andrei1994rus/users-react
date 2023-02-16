@@ -59,7 +59,7 @@ class App extends Component
                 this.subscription=this.stream.subscribe(v=>this.jqueryGetUsers(v));
             } 
             
-            catch (e)
+            catch(e)
             {
                 console.log(e);
             }
@@ -93,15 +93,7 @@ class App extends Component
                 const div_empty=document.querySelector(`.${styles.nocssvmaxunit__div_empty}`);
                 console.log('componentDidUpdate:',div_empty);
                 
-                if(window.outerWidth>window.outerHeight)
-                {
-                    div_empty.style.fontSize='4.5vw';
-                }
-
-                else
-                {
-                    div_empty.style.fontSize='4.5vh';
-                }
+                div_empty.style.fontSize=(window.outerWidth>window.outerHeight) ? '4.5vw' : '4.5vh';
             }
         }
     }
