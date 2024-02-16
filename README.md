@@ -21,4 +21,4 @@
 - Api: Github api;
 - Method: Mobile First;
 ---
-[URL](https://users-react.andrei1994rus.repl.co/) .
+[URL](https://luxurious-outgoing-emmental.glitch.me/) .
